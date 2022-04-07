@@ -26,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color(0xFF6200EE),
+        backgroundColor: Colors.blue,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white.withOpacity(.60),
         selectedFontSize: 14,
@@ -36,16 +36,16 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         items: [
           BottomNavigationBarItem(
-            title: Text('Favorites'),
+            title: Text('Order'),
             icon: Icon(Icons.home),
           ),
           BottomNavigationBarItem(
-            title: Text('Music'),
-            icon: Icon(Icons.person),
+            title: Text('Cart'),
+            icon: Icon(Icons.shopping_basket),
           ),
           BottomNavigationBarItem(
-            title: Text('Places'),
-            icon: Icon(Icons.shopping_basket),
+            title: Text('My Account'),
+            icon: Icon(Icons.person),
           ),
         ],
       ),
