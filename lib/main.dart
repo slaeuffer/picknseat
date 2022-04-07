@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'ordermenu.dart';
 
 void main() {
   runApp(MyApp());
@@ -49,6 +50,7 @@ class _SignInState extends State<SignIn> {
             children: [
               Column(
                   children: [
+                    Center(child: Text("//Sign in")),
                     Padding(
                       padding: EdgeInsets.only(left: 40, right: 40, top:20),
                       child: TextFormField(
@@ -73,12 +75,55 @@ class _SignInState extends State<SignIn> {
                         child: ElevatedButton(
                           child: Text("Sign in"),
                           onPressed: () {
+                            Navigator.pushReplacement(context, MaterialPageRoute<void>(
+                                builder: (BuildContext context) => OrderMenu()));
                           },
                         )
                     ),
                   ],
               ),
-              Center(child: Text("Sign up")),
+              Column(children: [
+                Center(child: Text("//Sign up")),
+                Padding(
+                  padding: EdgeInsets.only(left: 40, right: 40, top:20),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'E-mail',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 40, right: 40, top:20),
+                  child:TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 40, right: 40, top:20),
+                  child:TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Confirm password',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                Padding(
+                    padding: EdgeInsets.only(left: 50, right: 50, top:10),
+                    child: ElevatedButton(
+                      child: Text("Sign in"),
+                      onPressed: () {
+                        Navigator.pushReplacement(context, MaterialPageRoute<void>(
+                            builder: (BuildContext context) => OrderMenu()));
+                        },
+                    ),
+                ),
+              ],)
             ],
           )
         ),
