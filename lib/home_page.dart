@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.shopping_basket),
           ),
           BottomNavigationBarItem(
-            title: Text('My Account'),
+            title: Text('Account'),
             icon: Icon(Icons.person),
           ),
         ],
