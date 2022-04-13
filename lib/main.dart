@@ -30,6 +30,7 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   TextEditingController userController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController password2Controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +55,7 @@ class _SignInState extends State<SignIn> {
                     Padding(
                       padding: EdgeInsets.only(left: 40, right: 40, top:20),
                       child: TextFormField(
+                        controller: userController,
                         decoration: InputDecoration(
                           labelText: 'E-mail',
                           border: OutlineInputBorder(),
@@ -63,6 +65,7 @@ class _SignInState extends State<SignIn> {
                     Padding(
                       padding: EdgeInsets.only(left: 40, right: 40, top:20),
                       child:TextFormField(
+                        controller: passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'Password',
@@ -87,6 +90,7 @@ class _SignInState extends State<SignIn> {
                 Padding(
                   padding: EdgeInsets.only(left: 40, right: 40, top:20),
                   child: TextFormField(
+                    controller: userController,
                     decoration: InputDecoration(
                       labelText: 'E-mail',
                       border: OutlineInputBorder(),
@@ -96,6 +100,7 @@ class _SignInState extends State<SignIn> {
                 Padding(
                   padding: EdgeInsets.only(left: 40, right: 40, top:20),
                   child:TextFormField(
+                    controller: passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText: 'Password',
@@ -106,6 +111,7 @@ class _SignInState extends State<SignIn> {
                 Padding(
                   padding: EdgeInsets.only(left: 40, right: 40, top:20),
                   child:TextFormField(
+                    controller: password2Controller,
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText: 'Confirm password',
@@ -128,5 +134,9 @@ class _SignInState extends State<SignIn> {
           )
         ),
     );
+  }
+
+  void login() {
+
   }
 }
