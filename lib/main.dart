@@ -41,11 +41,19 @@ class _SignInState extends State<SignIn> {
     globalvars.cart_count = 0;
     globalvars.cart_list = [];
     Item bigmac = Item('1', 'Big Mac', 'assets/bigmac.png', '1', '5€');
-    Item woop = Item('2', 'Wooper', 'assets/bigmac.png', '1', '5€');
+    Item woop = Item('2', 'Double Whooper', 'assets/double_whopper.png', '1', '5€');
+
+
+
+
     Shop mcdo = Shop('1', 'Mc Donalds', 'assets/1.png', [bigmac]);
     Shop bk = Shop('2', 'Burger King', 'assets/2.png', [bigmac, woop]);
+    Shop kfc = Shop('3', 'KFC', 'assets/3.png', [woop]);
+    Shop starb = Shop('4', 'Starbucks', 'assets/4.png', [bigmac]);
     globalvars.shops.add(mcdo);
     globalvars.shops.add(bk);
+    globalvars.shops.add(kfc);
+    globalvars.shops.add(starb);
 
     return DefaultTabController(
       length: 2,

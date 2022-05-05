@@ -36,9 +36,10 @@ class _ProductsMenuState extends State<ProductsMenu> {
               position: BadgePosition.topEnd(top:5, end: 5),
               badgeColor: Colors.deepPurple,
               badgeContent: Text((widget.globalvars ?? new Globals()).cart_count.toString(), style: TextStyle(color: Colors.white)),
-              child: IconButton(icon: Icon(Icons.shopping_cart), onPressed: () => {
-                Navigator.push(context, MaterialPageRoute<void>(
-                    builder: (BuildContext context) => CartMenu(widget.globalvars)))
+              child: IconButton(icon: Icon(Icons.shopping_cart), onPressed: () async {
+                await Navigator.push(context, MaterialPageRoute<void>(
+                    builder: (BuildContext context) => CartMenu(widget.globalvars)));
+                setState(() {});
               },),
             ),
             IconButton(icon: Icon(Icons.search), onPressed: () => {},)
