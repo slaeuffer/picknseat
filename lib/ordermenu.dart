@@ -5,52 +5,39 @@ import 'products.dart';
 import 'globals.dart';
 import 'package:badges/badges.dart';
 import 'cart.dart';
-
-class OrderMenu extends StatelessWidget {
-  OrderMenu(Globals glovalvars);
-  Globals globalvars;
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Picknseat',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: OrderMenue(globalvars),
-    );
-  }
-}
+import 'class/Shop.dart';
+import 'class/Item.dart';
 
 class OrderMenue extends StatefulWidget {
-  OrderMenue(Globals globalvars, {Key key}) : super(key: key);
-  Globals globalvars;
 
   @override
   State<OrderMenue> createState() => _OrderMenueState();
+
+  Globals globalvars;
+  OrderMenue(this.globalvars);
 }
 
 class _OrderMenueState extends State<OrderMenue> {
-  Globals globalvars;
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Order'), actions: [
-        Badge(
-          position: BadgePosition.topEnd(top: 5, end: 5),
-          badgeColor: Colors.deepPurple,
-          badgeContent: Text(
-              (globalvars ?? new Globals()).cart_count.toString(),
-              style: TextStyle(color: Colors.white)),
-          child: IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () => {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                      builder: (BuildContext context) => CartMenu()))
-            },
-          ),
+        appBar: AppBar(
+            title: Text('Order'),
+            actions: [
+              Badge(
+                position: BadgePosition.topEnd(top:5, end: 5),
+                badgeColor: Colors.deepPurple,
+                badgeContent: Text((widget.globalvars ?? new Globals()).cart_count.toString(), style: TextStyle(color: Colors.white)),
+                child: IconButton(icon: Icon(Icons.shopping_cart), onPressed: () => {
+                  Navigator.push(context, MaterialPageRoute<void>(
+                      builder: (BuildContext context) => CartMenu(widget.globalvars)))
+                },),
+              ),
+              IconButton(icon: Icon(Icons.search), onPressed: () => {},)
+            ]
+
         ),
         IconButton(
           icon: Icon(Icons.search),
@@ -80,16 +67,22 @@ class _OrderMenueState extends State<OrderMenue> {
                   context,
                   MaterialPageRoute<void>(
                       builder: (BuildContext context) => SignIn()));
-            },
-          ),
-          ListTile(
+                },
+              ),
+ ListTile(
             title: const Text('My Profile'),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                       builder: (BuildContext context) => Profile()));
-            },
+				},)
+,            ],
+          )
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [for (var i = 0; i < widget.globalvars.shops.length; i++) shopCard(widget.globalvars.shops[i])],
           ),
         ],
       )),
@@ -107,29 +100,37 @@ class _OrderMenueState extends State<OrderMenue> {
       ),
     );
   }
-
-  Widget shopCard(int idShop, String txt) {
+  
+  Widget shopCard(Shop shop) {
     return Padding(
-      padding: EdgeInsets.only(left: 10, right: 10, top: 8),
-      child: Card(
-          child: InkWell(
-        onTap: goToShop,
-        child: Row(children: [
-          Image.asset("assets/" + idShop.toString() + ".png", scale: 1.7),
-          Padding(
-              padding: EdgeInsets.only(left: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    txt,
-                    style: TextStyle(fontSize: 18.0),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 2),
-                    child: Text(
-                      "Fast food",
-                      style: TextStyle(fontSize: 14.0, color: Colors.grey),
+        padding: EdgeInsets.only(left: 10, right: 10, top: 8),
+        child: Card(
+            child: InkWell(
+              onTap: () => goToShop(shop),
+              child: Row(
+                  children: [
+                    Image.asset(shop.picturePath, scale:1.7),
+                    Padding(
+                        padding: EdgeInsets.only(left: 15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(shop.nameShop, style: TextStyle(fontSize: 18.0),),
+                            Padding(
+                                padding: EdgeInsets.only(top: 2),
+                                child: Text("Fast food", style: TextStyle(fontSize: 14.0, color: Colors.grey),),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 3),
+                              child: Row(
+                                children: [
+                                  Icon(Icons.star, size: 14,),
+                                  Text('4.3')
+                                ],
+                              )
+                            )
+                          ],
+                        )
                     ),
                   ),
                   Padding(
@@ -153,10 +154,8 @@ class _OrderMenueState extends State<OrderMenue> {
     );
   }
 
-  void goToShop() {
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute<void>(
-            builder: (BuildContext context) => ProductsMenu(globalvars)));
+  void goToShop(Shop shop) {
+    Navigator.pushReplacement(context, MaterialPageRoute<void>(
+        builder: (BuildContext context) => ProductsMenu(widget.globalvars, shop)));
   }
 }

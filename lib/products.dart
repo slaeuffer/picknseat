@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:picknsteat/cart.dart';
 import 'ordermenu.dart';
+import 'package:badges/badges.dart';
 import 'globals.dart';
+import 'class/Item.dart';
+import 'class/Shop.dart';
 
 class ProductsMenu extends StatefulWidget {
-  ProductsMenu(Globals globalvars, {Key key}) : super(key: key);
-  Globals globalvars;
-
 
   @override
   _ProductsMenuState createState() => _ProductsMenuState();
+
+  Globals globalvars;
+  Shop current_shop;
+  ProductsMenu(this.globalvars, this.current_shop);
 }
 
+
 class _ProductsMenuState extends State<ProductsMenu> {
-  Globals globalvars;
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +27,19 @@ class _ProductsMenuState extends State<ProductsMenu> {
             icon: Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pushReplacement(context, MaterialPageRoute<void>(
-                builder: (BuildContext context) => OrderMenu(globalvars)));
+                builder: (BuildContext context) => OrderMenue(widget.globalvars)));
             },
           ),
-          title: Text('Mc Donalds'),
+          title: Text(widget.current_shop.nameShop),
           actions: [
-            IconButton(
-              icon: Icon(Icons.shopping_cart),
-              onPressed: () => {
+            Badge(
+              position: BadgePosition.topEnd(top:5, end: 5),
+              badgeColor: Colors.deepPurple,
+              badgeContent: Text((widget.globalvars ?? new Globals()).cart_count.toString(), style: TextStyle(color: Colors.white)),
+              child: IconButton(icon: Icon(Icons.shopping_cart), onPressed: () => {
                 Navigator.push(context, MaterialPageRoute<void>(
-                  builder: (BuildContext context) => CartMenu()))
-              },
+                    builder: (BuildContext context) => CartMenu(widget.globalvars)))
+              },),
             ),
             IconButton(icon: Icon(Icons.search), onPressed: () => {},)
           ]
@@ -41,30 +47,27 @@ class _ProductsMenuState extends State<ProductsMenu> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [
-            item("bigmac", "Big Mac")
-
-          ],
+          children: [for (var i = 0; i < widget.current_shop.listItem.length; i++) item(widget.current_shop.listItem[i])]
         ),
       ),
 
     );
   }
 
-  Widget item(String idItem, String nameItem) {
+  Widget item(Item item) {
     return Padding(
       padding: EdgeInsets.only(left: 10, right: 10, top: 8),
       child: Card(
           child: InkWell(
-            onTap: () => addToCart(),
+            onTap: () => addToCart(item),
             child: Row(
                 children: [
                   Padding(
                     padding: EdgeInsets.only(left: 30),
-                    child: Text(nameItem, style: TextStyle(fontSize: 18.0),),
+                    child: Text(item.nameItem, style: TextStyle(fontSize: 18.0),),
                   ),
                   Spacer(),
-                  Image.asset("assets/" + idItem.toString() + ".png", scale:1.7),
+                  Image.asset(item.picturePath, scale:1.7),
                 ]
             ),
           )
@@ -72,7 +75,10 @@ class _ProductsMenuState extends State<ProductsMenu> {
     );
   }
 
-  void addToCart() {
-
+  void addToCart(Item item) {
+      setState(() {
+        widget.globalvars.cart_count += 1;
+        widget.globalvars.cart_list.add(item);
+      });
   }
 }
