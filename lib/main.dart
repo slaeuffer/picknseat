@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'ordermenu.dart';
 import 'globals.dart';
+import 'class/Item.dart';
+import 'class/Shop.dart';
 
 void main() {
   runApp(MyApp());
@@ -38,6 +40,13 @@ class _SignInState extends State<SignIn> {
     Globals globalvars = new Globals();
     globalvars.cart_count = 0;
     globalvars.cart_list = [];
+    Item bigmac = Item('1', 'Big Mac', 'assets/bigmac.png', '1', '5€');
+    Item woop = Item('2', 'Wooper', 'assets/bigmac.png', '1', '5€');
+    Shop mcdo = Shop('1', 'Mc Donalds', 'assets/1.png', [bigmac]);
+    Shop bk = Shop('2', 'Burger King', 'assets/2.png', [bigmac, woop]);
+    globalvars.shops.add(mcdo);
+    globalvars.shops.add(bk);
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -82,7 +91,7 @@ class _SignInState extends State<SignIn> {
                           child: Text("Sign in"),
                           onPressed: () {
                             Navigator.pushReplacement(context, MaterialPageRoute<void>(
-                                builder: (BuildContext context) => OrderMenu(globalvars)));
+                                builder: (BuildContext context) => OrderMenue(globalvars)));
                           },
                         )
                     ),
@@ -127,7 +136,7 @@ class _SignInState extends State<SignIn> {
                       child: Text("Sign in"),
                       onPressed: () {
                         Navigator.pushReplacement(context, MaterialPageRoute<void>(
-                            builder: (BuildContext context) => OrderMenu(globalvars)));
+                            builder: (BuildContext context) => OrderMenue(globalvars)));
                         },
                     ),
                 ),
@@ -136,9 +145,5 @@ class _SignInState extends State<SignIn> {
           )
         ),
     );
-  }
-
-  void login() {
-
   }
 }

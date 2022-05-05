@@ -4,32 +4,20 @@ import 'products.dart';
 import 'globals.dart';
 import 'package:badges/badges.dart';
 import 'cart.dart';
-
-class OrderMenu extends StatelessWidget {
-  OrderMenu(Globals glovalvars);
-  Globals globalvars;
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Picknseat',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: OrderMenue(globalvars),
-    );
-  }
-}
+import 'class/Shop.dart';
+import 'class/Item.dart';
 
 class OrderMenue extends StatefulWidget {
-  OrderMenue(Globals globalvars, {Key key}) : super(key: key);
-  Globals globalvars;
 
   @override
   State<OrderMenue> createState() => _OrderMenueState();
+
+  Globals globalvars;
+  OrderMenue(this.globalvars);
 }
 
 class _OrderMenueState extends State<OrderMenue> {
-  Globals globalvars;
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +28,10 @@ class _OrderMenueState extends State<OrderMenue> {
               Badge(
                 position: BadgePosition.topEnd(top:5, end: 5),
                 badgeColor: Colors.deepPurple,
-                badgeContent: Text((globalvars ?? new Globals()).cart_count.toString(), style: TextStyle(color: Colors.white)),
+                badgeContent: Text((widget.globalvars ?? new Globals()).cart_count.toString(), style: TextStyle(color: Colors.white)),
                 child: IconButton(icon: Icon(Icons.shopping_cart), onPressed: () => {
                   Navigator.push(context, MaterialPageRoute<void>(
-                      builder: (BuildContext context) => CartMenu()))
+                      builder: (BuildContext context) => CartMenu(widget.globalvars)))
                 },),
               ),
               IconButton(icon: Icon(Icons.search), onPressed: () => {},)
@@ -77,36 +65,28 @@ class _OrderMenueState extends State<OrderMenue> {
         ),
         body: SingleChildScrollView(
           child: Column(
-            children: [
-              shopCard(1, "McDonald's"),
-              shopCard(2, "Burger King"),
-              shopCard(1, "McDonald's"),
-              shopCard(2, "Burger King"),
-              shopCard(1, "McDonald's"),
-              shopCard(2, "Burger King"),
-
-            ],
+            children: [for (var i = 0; i < widget.globalvars.shops.length; i++) shopCard(widget.globalvars.shops[i])],
           ),
         ),
 
     );
   }
   
-  Widget shopCard(int idShop, String txt) {
+  Widget shopCard(Shop shop) {
     return Padding(
         padding: EdgeInsets.only(left: 10, right: 10, top: 8),
         child: Card(
             child: InkWell(
-              onTap: goToShop,
+              onTap: () => goToShop(shop),
               child: Row(
                   children: [
-                    Image.asset("assets/" + idShop.toString() + ".png", scale:1.7),
+                    Image.asset(shop.picturePath, scale:1.7),
                     Padding(
                         padding: EdgeInsets.only(left: 15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(txt, style: TextStyle(fontSize: 18.0),),
+                            Text(shop.nameShop, style: TextStyle(fontSize: 18.0),),
                             Padding(
                                 padding: EdgeInsets.only(top: 2),
                                 child: Text("Fast food", style: TextStyle(fontSize: 14.0, color: Colors.grey),),
@@ -134,8 +114,8 @@ class _OrderMenueState extends State<OrderMenue> {
     );
   }
 
-  void goToShop() {
+  void goToShop(Shop shop) {
     Navigator.pushReplacement(context, MaterialPageRoute<void>(
-        builder: (BuildContext context) => ProductsMenu(globalvars)));
+        builder: (BuildContext context) => ProductsMenu(widget.globalvars, shop)));
   }
 }
