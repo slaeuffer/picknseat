@@ -36,15 +36,15 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         items: [
           BottomNavigationBarItem(
-            title: Text('Order'),
+            label: 'Account',
             icon: Icon(Icons.home),
           ),
           BottomNavigationBarItem(
-            title: Text('Cart'),
+            label: 'Account',
             icon: Icon(Icons.shopping_basket),
           ),
           BottomNavigationBarItem(
-            title: Text('Account'),
+            label: 'Account',
             icon: Icon(Icons.person),
           ),
         ],

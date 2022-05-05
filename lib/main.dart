@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'ordermenu.dart';
+import 'globals.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,6 +35,9 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+    Globals globalvars = new Globals();
+    globalvars.cart_count = 0;
+    globalvars.cart_list = [];
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -51,7 +55,6 @@ class _SignInState extends State<SignIn> {
             children: [
               Column(
                   children: [
-                    Center(child: Text("//Sign in")),
                     Padding(
                       padding: EdgeInsets.only(left: 40, right: 40, top:20),
                       child: TextFormField(
@@ -79,14 +82,13 @@ class _SignInState extends State<SignIn> {
                           child: Text("Sign in"),
                           onPressed: () {
                             Navigator.pushReplacement(context, MaterialPageRoute<void>(
-                                builder: (BuildContext context) => OrderMenu()));
+                                builder: (BuildContext context) => OrderMenu(globalvars)));
                           },
                         )
                     ),
                   ],
               ),
               Column(children: [
-                Center(child: Text("//Sign up")),
                 Padding(
                   padding: EdgeInsets.only(left: 40, right: 40, top:20),
                   child: TextFormField(
@@ -125,7 +127,7 @@ class _SignInState extends State<SignIn> {
                       child: Text("Sign in"),
                       onPressed: () {
                         Navigator.pushReplacement(context, MaterialPageRoute<void>(
-                            builder: (BuildContext context) => OrderMenu()));
+                            builder: (BuildContext context) => OrderMenu(globalvars)));
                         },
                     ),
                 ),

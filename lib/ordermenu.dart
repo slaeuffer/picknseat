@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
+import 'main.dart';
+import 'products.dart';
+import 'globals.dart';
+import 'package:badges/badges.dart';
+import 'cart.dart';
 
 class OrderMenu extends StatelessWidget {
-  // This widget is the root of your application.
+  OrderMenu(Globals glovalvars);
+  Globals globalvars;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -10,31 +15,65 @@ class OrderMenu extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: OrderMenue(),
+      home: OrderMenue(globalvars),
     );
   }
 }
 
 class OrderMenue extends StatefulWidget {
-  const OrderMenue({Key key}) : super(key: key);
+  OrderMenue(Globals globalvars, {Key key}) : super(key: key);
+  Globals globalvars;
 
   @override
   State<OrderMenue> createState() => _OrderMenueState();
 }
 
 class _OrderMenueState extends State<OrderMenue> {
+  Globals globalvars;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            leading: Icon(Icons.menu),
             title: Text('Order'),
             actions: [
-              IconButton(icon: Icon(Icons.shopping_cart), onPressed: () => {},),
+              Badge(
+                position: BadgePosition.topEnd(top:5, end: 5),
+                badgeColor: Colors.deepPurple,
+                badgeContent: Text((globalvars ?? new Globals()).cart_count.toString(), style: TextStyle(color: Colors.white)),
+                child: IconButton(icon: Icon(Icons.shopping_cart), onPressed: () => {
+                  Navigator.push(context, MaterialPageRoute<void>(
+                      builder: (BuildContext context) => CartMenu()))
+                },),
+              ),
               IconButton(icon: Icon(Icons.search), onPressed: () => {},)
             ]
 
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: CircleAvatar(
+                  radius: 16,
+                  child: ClipRRect(
+                    child: Image.asset("assets/default-avatar.png",)
+                  ),
+                ),
+              ),
+              ListTile(
+                title: const Text('Log off'),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute<void>(
+                      builder: (BuildContext context) => SignIn()));
+                },
+              ),
+            ],
+          )
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -97,6 +136,6 @@ class _OrderMenueState extends State<OrderMenue> {
 
   void goToShop() {
     Navigator.pushReplacement(context, MaterialPageRoute<void>(
-        builder: (BuildContext context) => MyHomePage()));
+        builder: (BuildContext context) => ProductsMenu(globalvars)));
   }
 }
