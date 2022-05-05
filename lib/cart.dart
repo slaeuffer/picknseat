@@ -25,9 +25,7 @@ class _CartMenuState extends State<CartMenu> {
             },
           ),
           title: Text('Cart'),
-          actions: [
-            IconButton(icon: Icon(Icons.search), onPressed: () => {},)
-          ]
+          actions: []
 
       ),
       body: Align(
@@ -47,10 +45,10 @@ class _CartMenuState extends State<CartMenu> {
                 padding: EdgeInsets.only(bottom: 15),
                 child: ElevatedButton(
                   child: const Text('Order', style: TextStyle(fontSize: 20)),
-                  onPressed: () {
-                    setState(() {});
-                    Navigator.push(context, MaterialPageRoute<void>(
+                  onPressed: () async {
+                    await Navigator.push(context, MaterialPageRoute<void>(
                         builder: (BuildContext context) => MyPaymentPage()));
+                    setState(() {});
                   },
                 ),
               )

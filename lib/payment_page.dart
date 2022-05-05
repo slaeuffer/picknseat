@@ -21,7 +21,12 @@ class _MyPaymentPageState extends State<MyPaymentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          leading: Icon(Icons.menu),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           title: Text('Payment Information'),
       ),
       body: Column(
